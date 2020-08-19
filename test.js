@@ -1,5 +1,10 @@
-let a = 10;
-let b = testQuery(() => 5);
 
-testResult(a + b);
+(async function fe() {
+	let a = 11;
+	let b = await testQuery((input) => 5 + input);
+	testResult(a + b);
+})();
+
+
+
 

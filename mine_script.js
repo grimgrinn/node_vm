@@ -6,23 +6,13 @@ const PARSING_TIMEOUT = 1000;
 const EXECUTION_TIMEOUT = 9000;
 
 const proc = (file, callback) => {
-	console.log(`hello from vm. filename is ${file}`);
-
 	const context = {
 		console,
 		testQuery: function(cb) {
-			setTimeout(function() {console.log(cb(100500)); }, 2000);
+			return new Promise(r => setTimeout(() => r(cb(100501)), 2000));
 		},
-
 		testResult: function(result) {
 			callback(result);  // cb from init
-		},
-		require: name => {
-			if (name === 'fs') {
-				console.log("module fs is restricted");
-				return null;
-			}
-			return require(name);
 		}
 	};
 
@@ -47,8 +37,6 @@ const proc = (file, callback) => {
 			process.exit(1);
 		}
 	});
-
-	typeof(callback) === 'function' && callback();
 }
 
 module.exports = proc;
